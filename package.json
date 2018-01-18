@@ -1,0 +1,28 @@
+{
+  "name": "frontend-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/campudus-labs/frontend-testing.git"
+  },
+  "keywords": [],
+  "author": "Joern Bernhardt <jb@campudus.com> (http://www.campudus.com)",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/campudus-labs/frontend-testing/issues"
+  },
+  "homepage": "https://github.com/campudus-labs/frontend-testing#readme",
+  "dependencies": {
+    "pixelmatch": "^4.0.2"
+  },
+  "devDependencies": {
+    "jest": "^22.1.2",
+    "prettier": "^1.10.2",
+    "puppeteer": "^1.0.0"
+  }
+}
