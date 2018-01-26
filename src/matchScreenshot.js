@@ -32,6 +32,7 @@ async function matchesScreenshot(url, { debug = false, threshold = 0.1 } = {}) {
       .pipe(fs.createWriteStream(`${testPath}/__screenshots__/${path.basename(url)}-${numbers[url]}-diff.png`));
   }
 
+  await browser.close();
   return expect(mismatchedPixels).toBe(0);
 
   async function readOrUpdatePng(file) {
