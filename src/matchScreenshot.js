@@ -6,9 +6,16 @@ const PNG = require("pngjs").PNG;
 const puppeteer = require("puppeteer");
 
 const numbers = {};
+let browser = null;
+async function initSnapshots() {
+  browser = await puppeteer.launch();
+  return;
+}
+async function cleanUpSnapshots() {
+  await browser.close();
+}
 
 async function matchesScreenshot(url, { debug = false, threshold = 0.1 } = {}) {
-  const browser = await puppeteer.launch();
   const page = await browser.newPage();
   await page.goto(url);
   numbers[url] = numbers[url] || 0;
@@ -32,16 +39,14 @@ async function matchesScreenshot(url, { debug = false, threshold = 0.1 } = {}) {
       .pipe(fs.createWriteStream(`${testPath}/__screenshots__/${path.basename(url)}-${numbers[url]}-diff.png`));
   }
 
-  await browser.close();
   return expect(mismatchedPixels).toBe(0);
 
   async function readOrUpdatePng(file) {
-    if (updateSnapshot) {
-
-    }
     return readPng(file).catch(async err => {
       if (err.code === "ENOENT") {
         oldFileExisted = false;
+        await updateSnapshot(file);
+        await readPng(file);
       } else {
         throw err;
       }
@@ -68,5 +73,7 @@ async function matchesScreenshot(url, { debug = false, threshold = 0.1 } = {}) {
 }
 
 module.exports = {
+  cleanUpSnapshots,
+  initSnapshots,
   matchesScreenshot
 };
